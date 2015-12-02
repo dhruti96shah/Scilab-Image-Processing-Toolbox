@@ -1,7 +1,7 @@
 /***************************************************
-Author : Sukul Bagai
+Author : Dhruti Shah
 ****************************************************
-Usage : return_image = gaussianblur(input_image,ksize_height,ksize_width,sigmaX,sigmaY);
+Usage : return_image = grayconnected(input_image,row,column,tolerance);
 ***************************************************/
 
 #include <numeric>
@@ -62,19 +62,21 @@ extern "C"
     if(intErr)
         return intErr;
 
-    //for value of tolerance
-    sciErr = getVarAddressFromPosition(pvApiCtx,4,&piAddr4);
-    if (sciErr.iErr)
+    if(nbInputArgument(pvApiCtx)==4)
     {
-        printError(&sciErr, 0);
-        return 0;
+        //for value of tolerance
+        sciErr = getVarAddressFromPosition(pvApiCtx,4,&piAddr4);
+        if (sciErr.iErr)
+        {
+            printError(&sciErr, 0);
+            return 0;
+        }
+        intErr = getScalarDouble(pvApiCtx, piAddr4, &tolerance);
+        if(intErr)
+            return intErr;
     }
-    intErr = getScalarDouble(pvApiCtx, piAddr4, &tolerance);
-    if(intErr)
-        return intErr;
 
-    //applying checks to input parameters, and assigning default values in case of error
-    //Mat new_image(image.rows,image.cols,CV_8UC3);
+
     if(row<0)
     {
         sciprint("Positive Value Required for Row.");
