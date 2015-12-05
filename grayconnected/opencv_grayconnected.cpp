@@ -31,7 +31,7 @@ extern "C"
     int *piAddr4  = NULL;
     int *piAddr5  = NULL;
     int i,j,k;
-    int row, column, tolerance=32;
+    double row, column, tolerance=32;
 
     //checking input argument
     CheckInputArgument(pvApiCtx, 3, 4);
